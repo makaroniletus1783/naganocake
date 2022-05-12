@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+      <h2><span class="badge">会員一覧</span></h2>
+      <p id="notice"></p>
+      <table class="table table-hover table-inverse">
+        <thead class="thead-light">
+          <tr>
+            <th>会員id</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @customers.each do |customer| %>
+            <tr>
+              <td><%= customer.id %></td>
+              <td><%= customer.first_name %><%= customer.last_name %></td>
+              <td><%= customer.email %></td>
+              <% if customer.is_unsubscribed %>
+                <td>退会</td>
+              <% else %>
+                <td class="state">有効</td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+       <h2><span class="badge">注文入力情報</span></h2>
+       <%= form_with model: @order, url: orders_confirm_path do |f| %>
+         <% if @order.errors.any? %>
+          <div id="error_explanation" >
+           <h3><%= @order.errors.count %> error prohibited this obj from being saved: </h3>
+           <% @order.errors.full_messages.each do |message| %>
+            <ul>
+             <li> <%= message %></li>
+            </ul>
+           <% end %>
+          </div>
+        <% end %>
+        <h3><span class="badge">支払方法</span></h3>
+        　　<%= f.radio_button :pay_method, Order.pay_methods.key(0) %>
+        <%= f.label :pay_method, Order.pay_methods_i18n[:credit_card] %></br>
+      　　<%= f.radio_button :pay_method, Order.pay_methods.key(1) %>
+        <%= f.label :pay_method, Order.pay_methods_i18n[:transfer]%>
+        <h3><span class="badge">お届け先</span></h3>
+        　　<%= f.radio_button :select_address, "0" %>
+            <%= f.label :select_address, "ご自身の住所" %><br/>
+        　　　　<%= current_customer.address_display %></br>
+        　　　　<%= current_customer.first_name %><%= current_customer.last_name %><br/>
+        　　<div class="row">　</div>
+        　　<%= f.radio_button :select_address, "1" %>
+            <%= f.label :select_address, "登録済住所から選択" %><br/>
+          　　　　<%= f.select :address_id, options_from_collection_for_select(Address.all, :id, :address_display), include_blank: "住所選択"%>
+          　<div class="row">　</div>
+          　　<%= f.radio_button :select_address, "2" %>
+            <%= f.label :select_address, "新しい届け先" %>
+            <div class="row">
+          <div class="col-4">
+            <p>　　　　郵便番号（ハイフンなし）</p>
+          </div>
+          <div class="col-5">
+            <div class="field">
+              <%= f.text_field :postal_code %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <p>　　　　住所</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :address, class:"w20" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <p>　　　　宛名</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :name %>
+          </div>
+        </div>
+        <p id="notice"></p>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-7"><%= f.submit "確認画面に進む", class:"btn btn-primary" %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

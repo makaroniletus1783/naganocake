@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+       <h2><span class="badge">　注文履歴詳細</span></h2>
+       <div class="row">
+         <div class="col-2">
+           <h3><span class="badge">購入者</span></h3>
+         </div>
+         <div class="col-10">
+           <h4><%= @order.customer.first_name + @order.customer.last_name %></h4>
+         </div>
+       </div>
+       <div class="row">
+         <div class="col-2">
+           <h3><span class="badge">注文日</span></h3>
+         </div>
+         <div class="col-10">
+           <h4><%= @order.created_at.strftime('%Y/%m/%d') %></h4>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-2">
+           <h3><span class="badge">配送先</span></h3>
+         </div>
+         <div class="col-10">
+           <h4>
+             <%= '〒' + @order.postal_code + ' ' + @order.address %><br/>
+             <%= @order.name %>
+           </h4>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-2">
+           <h3><span class="badge">支払方法</span></h3>
+         </div>
+         <div class="col-10">
+           <h4><%= @order.pay_method_i18n %></h4>
+         </div>
+       </div>
+       <div class="row">
+         <div class="col-2">
+           <h3><span class="badge">注文ステータス</span></h3>
+         </div>
+         <div class="col-10">
+           <p></p>
+           <%= form_with model: @order, url: admin_order_path(@order), method: :patch do |f| %>
+            <%= f.select :status, options_for_select([[Order.statuses_i18n[:pay_waiting], Order.statuses.key(0)], [Order.statuses_i18n[:pay_check], Order.statuses.key(1)], [Order.statuses_i18n[:shipping], Order.statuses.key(4)]]), include_blank: @order.status_i18n %>
+            <%= f.submit "更新", class:"btn btn-success" %>
+           <% end %>
+         </div>
+       </div>
+       <p id="notice"></p>
+       <div class="row">
+         <div class="col-8">
+           <table class="table table-hover table-inverse">
+            <thead class="thead-light">
+              <tr>
+                <th>商品名</th>
+                <th>単価（税込み）</th>
+                <th>数量</th>
+                <th>製作ステータス</th>
+              </tr>
+            </thead>
+          <tbody>
+              <% @sum = 0 %>
+           <% @order_details.each do |order_detail| %>
+            <tr>
+              <td><%= order_detail.item.name %></td>
+              <td><%= order_detail.item.with_tax_price %></td>
+               <% @sum += order_detail.subtotal %>
+              <td><%= order_detail.amount %></td>
+              <td>
+                  <%= form_with model: order_detail, url: admin_order_detail_path(order_detail), method: :patch do |f| %>
+                    <%= f.select :making_status, options_for_select([[OrderDetail.making_statuses_i18n[:producing], OrderDetail.making_statuses.key(2)], [OrderDetail.making_statuses_i18n[:complete], OrderDetail.making_statuses.key(3)]]), include_blank: order_detail.making_status_i18n %>
+                    <%= f.submit "更新", class:"btn btn-success" %>
+                  <% end %>
+              </td>
+             </tr>
+            <% end %>
+           </tbody>
+          </table>
+          </div>
+          <div class="col-4">
+              <div class="row">　</div>
+              <div class="row">　</div>
+              <div class="row">
+                  <div class="col-6">
+                      <h3><span class="badge">商品合計</span></h3>
+                  </div>
+                  <div class="col-6">
+                      <h3><span class="badge"><%= @sum %> 円</span></h3>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-6">
+                      <h3><span class="badge">送料</span></h3>
+                  </div>
+                  <div class="col-6">
+                      <h3><span class="badge"><%= @order.shipping_fee %>円</span></h3>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-6">
+                      <h3><span class="badge">請求金額合計</span></h3>
+                  </div>
+                  <div class="col-6">
+                      <h3><span class="badge"><%= @sum + @order.shipping_fee %>円</span></h3>
+                  </div>
+                </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>

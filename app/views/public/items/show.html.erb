@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">　</div>
+  <div class="row">　</div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-6">
+      <h1 id="notice"></h1>
+      <%= image_tag @item.image, size: "450x300" %>
+    </div>
+    <div class="col-5">
+      <div class="row">　</div>
+      <div class = "row">
+        <p id="notice"></p>
+        <h2><span class="badge"><%= @item.name %></span></h2>
+      </div>
+      <div class="row">
+        <h4><%= @item.introduction %></h4>
+      </div>
+      <div class="row">　</div>
+       <div class="row">　</div>
+      <div class="row">
+        <h3><span class="badge">ジャンル：<%=@item.genre.name %></span></h3>
+      </div>
+      <div class="row">
+        <div class="col-6">
+           <h2><span class="badge">￥<%= (@item.with_tax_price).to_s %>（税込み）</span></h2>
+        </div>
+        <div class="col-6">
+          <% if @item.is_available %>
+            <h2><span class="state badge">販売中</span></h2>
+          <% else %>
+            <h2><span class="badge">販売停止中</span></h2>
+          <% end %>
+        </div>
+      </div>
+      <% if @item.is_available %>
+      <div class="row">　</div>
+      <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+      <div class="row">
+        <div class="col-4">
+          <%= f.select :amount, *[1..10], include_blank: "個数選択" %>
+          <%= f.hidden_field :item_id, :value => @item.id %>
+        </div>
+        <div class="col-6">
+          <%= f.submit "カートに入れる", class:"btn btn-success" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>

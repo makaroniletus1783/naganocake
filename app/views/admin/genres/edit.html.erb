@@ -1,0 +1,31 @@
+<p id="notice"></p>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0">
+         <h2><span class="badge">ジャンル編集</span></h2>
+        <%= form_with model: @genre, url: admin_genre_path(@genre.id), method: :patch do |f| %>
+         <% if @genre.errors.any? %>
+          <div id="error_explanation" >
+           <h3><%= @genre.errors.count %> error prohibited this obj from being saved: </h3>
+           <% @genre.errors.full_messages.each do |message| %>
+            <ul>
+             <li> <%= message %></li>
+            </ul>
+           <% end %>
+          </div>
+         <% end %>
+        <div class="row">
+          <div class="col-4">
+            <div class="field">
+              <%= f.label :ジャンル名 %><br />
+              <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+            </div>
+          </div>
+        </div>
+        <div class="actions"><br />
+         <%= f.submit "変更を保存", class:"btn btn-success" %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+</div>

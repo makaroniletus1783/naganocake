@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+      <h2><span class="badge">商品新規登録</span></h2>
+      <p id="notice"></p>
+    </div>
+  </div>
+</div>
+  <%= form_with model: @item, url: admin_items_path, method: :post do |f| %>
+      <% if @item.errors.any? %>
+          <div id="error_explanation" >
+           <h3><%= @item.errors.count %> error prohibited this obj from being saved: </h3>
+           <% @item.errors.full_messages.each do |message| %>
+            <ul>
+             <li> <%= message %></li>
+            </ul>
+           <% end %>
+          </div>
+         <% end %>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>商品画像</p>
+          </div>
+          <div class= "col-4">
+            <div class="field">
+              <%= f.file_field :image, accept: "image/*" %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>商品名</p>
+          </div>
+          <div class="col-4">
+            <%= f.text_field :name, include_blank: "商品名"%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>商品説明</p>
+          </div>
+          <div class="col-4">
+            <%= f.text_area :introduction %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>ジャンル</p>
+          </div>
+          <div class="col-4">
+             <%= f.collection_select :genre_id, Genre.all, :id, :name, include_blank: "選択して下さい" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>税抜価格</p>
+          </div>
+          <div class="col-4">
+            <%= f.text_field :price %>　円
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-2">
+            <p>販売ステータス</p>
+          </div>
+          <div class="col-4">
+            <%= f.radio_button :is_available, true %>
+            <%= f.label :is_available, '販売中', value: true %>
+            <%= f.radio_button :is_available, false %>
+            <%= f.label :is_available, '販売停止中', value: false %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class = "col-5"></div>
+          <div class ="col-3">
+            <div class="actions"><br />
+              <%= f.submit "新規登録", class:"btn btn-success" %>
+            </div>
+          </div>
+        </div>
+
+
+       <% end %>
+</div>

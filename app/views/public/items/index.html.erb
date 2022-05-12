@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2">
+      <p id="notice"></p>
+      <div class="card">
+       <div class="card-header">ジャンル検索</div>
+       <div class="card-body">
+        <% @genres.each do |genre| %>
+         <div class="card-title">
+           <%= link_to genre.name, items_path(genre_id: genre.id), class:"link-secondary" %>
+         </div>
+        <% end %>
+      </div>
+     </div>
+    </div>
+    <div class="col-10">
+      <p id="notice"></p>
+       <h2><span class="badge">商品一覧（全<%= @items.count %>件）</span></h2>
+       <div class="row">
+         <% @items.each do |item| %>
+         <div class="col-3">
+           <p id="notice"></p>
+           <p id="notice"></p>
+           <div class="row">
+             　<%= image_tag item.image, size: "200x150" %>
+           </div>
+           <div class="row">
+             　<%= link_to item.name, item_path(item) %>
+           </div>
+           <div class="row">
+             　￥<%= (item.price * 1.1).to_i %>
+           </div>
+         </div>
+         <% end %>
+       </div>
+    </div>
+  </div>
+</div>

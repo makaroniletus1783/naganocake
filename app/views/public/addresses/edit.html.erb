@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+       <h2><span class="badge">配送先編集</span></h2>
+       <%= form_with model: @address, url: address_path(@address), method: :patch do |f| %>
+         <% if @address.errors.any? %>
+          <div id="error_explanation" >
+           <h3><%= @address.errors.count %> error prohibited this obj from being saved: </h3>
+           <% @address.errors.full_messages.each do |message| %>
+            <ul>
+             <li> <%= message %></li>
+            </ul>
+           <% end %>
+          </div>
+         <% end %>
+         <div class="row">　</div>
+        <div class="row">
+          <div class="col-3">
+            <p>郵便番号（ハイフンなし）</p>
+          </div>
+          <div class="col-5">
+            <div class="field">
+              <%= f.text_field :postal_code %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p>住所</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :address, class:"w20" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p>宛名</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :name %>
+          </div>
+          <div class="col-4">
+            <%= f.submit "変更内容を保存", class:"btn btn-success" %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>

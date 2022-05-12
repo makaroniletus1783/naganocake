@@ -1,0 +1,25 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+.box  {
+  margin-top: 30%;
+}
+
+.state {
+  color: green;
+}
+
+.w20 {
+  width: 100%;
+}
+
+.bar {
+  height: 100px;
+}
+
+.d-none {
+  width: 300px;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  height: 60px;
+}

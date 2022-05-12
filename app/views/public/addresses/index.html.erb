@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p id="notice"></p>
+       <h2><span class="badge">配送先一覧/登録</span></h2>
+       <%= form_with model: @address, url: addresses_path, method: :post do |f| %>
+         <% if @address.errors.any? %>
+          <div id="error_explanation" >
+           <h3><%= @address.errors.count %> error prohibited this obj from being saved: </h3>
+           <% @address.errors.full_messages.each do |message| %>
+            <ul>
+             <li> <%= message %></li>
+            </ul>
+           <% end %>
+          </div>
+         <% end %>
+         <div class="row">　</div>
+        <div class="row">
+          <div class="col-3">
+            <p>郵便番号（ハイフンなし）</p>
+          </div>
+          <div class="col-5">
+            <div class="field">
+              <%= f.text_field :postal_code %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p>住所</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :address, class:"w20" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <p>宛名</p>
+          </div>
+          <div class="col-5">
+            <%= f.text_field :name %>
+          </div>
+          <div class="col-4">
+            <%= f.submit "新規登録", class:"btn btn-success" %>
+          </div>
+        </div>
+        <% end %>
+        <div class="row">　</div>
+        <div class="row">
+          <div class="col-8">
+            <table class="table table-hover table-inverse table-bordered">
+         <thead class="thead-light">
+          <tr>
+            <th>郵便番号</th>
+            <th>住所</th>
+            <th>宛名</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @addresses.each do |address| %>
+            <tr>
+              <td><%= address.postal_code %></td>
+              <td><%= address.address %></td>
+              <td><%= address.name%></td>
+              <td>
+                <%= link_to "編集する", edit_address_path(address), class:"btn btn-success" %>
+                　<%= link_to "削除する", address_path(address), method: :delete, class:"btn btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      </div>
+      </div>
+
+    </div>
+  </div>
+</div>

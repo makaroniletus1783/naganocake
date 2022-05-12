@@ -1,0 +1,41 @@
+<p id="notice"></p>
+  <div class="container">
+    <div class="row">
+      <div class="col-10 px-5 px-sm-0">
+       <h2><span class="badge">管理者ログイン</span></h2>
+       <p id="notice"></p>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+         <div class = "row">
+           <div class= "col-4">
+             <p>　　メールアドレス</p>
+           </div>
+           <div class= "col-6">
+             <div class="field">
+               <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+             </div>
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-4">
+             <p>　　パスワード</p>
+           </div>
+           <div class="col-6">
+             <div class="field">
+                <%= f.password_field :password, autocomplete: "current-password" %>
+             </div>
+           </div>
+         </div>
+
+         <div class="row">
+           <div class="col-4"></div>
+           <div class="col-6">
+             <div class="form-group">
+              <%= f.submit "ログイン", class:"btn btn-primary" %>
+            </div>
+           </div>
+         </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
